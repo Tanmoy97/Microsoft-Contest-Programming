@@ -1,0 +1,56 @@
+Given a String S, find the length of the longest palindromic subsequence.
+
+Example 1:
+
+Input: S = "bbabcbcab" 
+Output: 7
+Explanation: “babcbab” is the longest 
+palindromic subsequence in S.
+“bbbbb” and “bbcbb” are also palindromic 
+subsequences of S but they are not the longest.
+ 
+
+Example 2:
+
+Input: S = "abbaab"
+Output: 4
+ 
+
+Your Task: 
+You don't need to read input or print anything. Your task is to complete the function lps() which takes the string S as input parameter and returns the length of the longest possible palindromic subsequence in S.
+
+ 
+
+Expected Time Complexity: O(N2)
+Expected Auxiliary Space: O(N2)
+
+ 
+
+Constraints:
+1<=N<=1000 where N is the length of the string S.
+String S contains only lowercase characters.
+
+SOLUTION:
+
+class Solution
+{
+public:
+    int lps(string S)
+    {
+        //code here
+        int n = S.length();
+        string str = S;
+        reverse(str.begin(),str.end());
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int i=1;i<=n;i++) {
+            for(int j=1;j<=n;j++) {
+                if(S[i-1]==str[j-1]) 
+                    dp[i][j] = 1+dp[i-1][j-1];
+                else 
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        return dp[n][n];
+        
+    }
+};
