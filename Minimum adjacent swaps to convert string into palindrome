@@ -1,0 +1,78 @@
+Given a string s, calculate the minimum number of adjacent swaps required to convert it into a palindrome. If it is impossible to convert the given string into a palindrome then return -1.
+
+Example 1:
+
+Input:
+s = ccdd
+Output:
+2
+Explanation:
+swap(s[2],s[3]) -> cdcd
+swap(s[1],s[2]) -> dccd
+
+Example 2:
+
+Input:
+s = abc
+Output:
+-1
+Explanation:
+string s can't be converted into a palindrome
+Your Task:  
+You don't need to read input or print anything. Your task is to complete the function minswaps() which takes a string s as input parameters and returns the minimum number of adjacent swaps required to convert string s into palindrome or returns -1 if not possible.
+
+ 
+
+Expected Time Complexity: O(|s|*|s|)
+Expected Auxiliary Space: O(1)
+
+ 
+
+Constraints:
+1 ≤ |s| ≤ 1000
+
+
+SOLUTION:
+
+class Solution
+{
+
+public:
+    int minswaps(string s)
+    {
+        vector<int> cc(26,0);
+        
+        for(char c : s)
+            cc[c-'a']++;
+         
+        int flag = 0;
+        for(int i = 0 ; i < 26 ; i++)
+            flag += (cc[i] & 1);
+        
+        if(flag > 1){
+            return -1;
+        }
+        
+        int end = s.length()-1, ans = 0;
+        for(int i = 0 ; i < s.length()/2 ; i++){
+            if(s[i]==s[end-i])
+                continue;
+           
+            int j, k;
+            for(j = i+1 ; j <= end-i && s[j]!=s[end-i] ; j++);
+            for(k = end-i-1; k >= i && s[k]!=s[i] ; k--);
+            
+            ans += min(j-i, end-i-k);
+            if( j-i < end-i-k){                    
+                for(int p = j; p > i ; p--)
+                    swap(s[p], s[p-1]);
+            }else{
+                for(int p = k ; p < end-i ; p++)
+                    swap(s[p], s[p+1]);
+            }            
+        }
+        return ans;
+        
+    
+    }
+};
