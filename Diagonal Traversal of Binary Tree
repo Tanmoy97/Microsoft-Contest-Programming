@@ -1,0 +1,64 @@
+Given a Binary Tree containing N nodes, find its diagonal traversal. Consider lines of slope -1 passing between nodes.
+
+Example 1:
+
+Input :
+            8
+         /     \
+        3      10
+      /   \      \
+     1     6     14
+         /   \   /
+        4     7 13
+Output : 8 10 14 3 6 7 13 1 4
+Explanation:
+unnamed
+Diagonal Traversal of binary tree : 
+ 8 10 14 3 6 7 13 1 4
+ 
+
+Your Task:
+You don't need to read input or print anything. The task is to complete the function diagonal() that takes the root node as input parameter and returns a list of integers denoting the diagonal traversal of the given tree.
+
+ 
+
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(N)
+ 
+
+Constraints:
+1 <= N <= 10^5
+
+SOLUTION:
+
+void diagonalTraversal(Node *root, int level, map<int, vector<int>> &mp)
+{
+    if(root)
+    {
+        mp[level].push_back(root->data);
+        
+        diagonalTraversal(root->left,  level + 1, mp);
+        diagonalTraversal(root->right, level,     mp);
+    }
+}
+
+vector<int> diagonal(Node *root)
+{
+    map<int, vector<int>> mp;
+    
+    diagonalTraversal(root, 0, mp);
+    
+    vector<int> res;
+    for(auto index: mp)
+    {
+        for(int x: index.second)
+        {
+            res.push_back(x);
+        }
+    }
+    
+    return res;
+}
+
+
+ 
