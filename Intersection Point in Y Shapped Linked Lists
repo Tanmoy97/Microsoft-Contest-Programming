@@ -1,0 +1,55 @@
+Given two singly linked lists of size N and M, write a program to get the point where two linked lists intersect each other.
+
+ 
+
+Example 1:
+
+Input:
+LinkList1 = 3->6->9->common
+LinkList2 = 10->common
+common = 15->30->NULL
+Output: 15
+Explanation:
+Y ShapedLinked List
+ 
+
+Your Task:
+You don't need to read input or print anything. The task is to complete the function intersectionPoint() which takes the pointer to the head of linklist1(head1) and linklist2(head2) as input parameters and returns an integer denoting the data value of a node where two linked lists intersect. If linked list do not merge at any point, then it should return -1.
+ 
+
+ 
+
+Expected Time Complexity: O(N+M)
+Expected Auxiliary Space: O(1)
+
+ 
+
+Constraints:
+1 <= N,M <= 100000
+1 <= value of a node<= 50000
+
+SOLUTION:
+
+int intersectionPoint(Node* head1, Node* head2)
+{
+    // Your Code Here
+    if(head1 == NULL || head2 == NULL){
+return 0;
+}
+Node* pa = head1;
+Node* pb = head2;
+
+while (pa != pb) {
+pa = pa->next;
+pb = pb->next;
+
+if (pa == pb) return pa->data;
+
+if (pa == NULL) pa = head2;
+
+if (pb == NULL) pb = head1;
+}
+
+return pa->data;
+}
+
